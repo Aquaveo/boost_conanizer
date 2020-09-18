@@ -33,6 +33,7 @@ jobs:
       CONAN_BUILD_TYPES: ${{ matrix.build_type }}
       CONAN_GCC_VERSIONS: ${{ matrix.compiler-version }}
       CONAN_DOCKER_IMAGE: docker.aquaveo.com/aquaveo/conan-docker/conan-gcc${{ matrix.compiler-version }}:py36
+      CONAN_UPLOAD: https://conan.aquaveo.com
       # Python Variables
       PYTHON_TARGET_VERSION: ${{ matrix.python-version }}
       RELEASE_PYTHON: 'False'
