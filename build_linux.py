@@ -25,5 +25,5 @@ if __name__ == "__main__":
         else:
             raise RuntimeError('Compiler must be GCC 5, 6, or 7')
 
-    print(f'remotes_manager.upload_remote_name = {builder.remotes_manager.upload_remote_name}')
+    builder.remotes_manager.upload_remote_name = 'aquaveo'
     builder.run()
