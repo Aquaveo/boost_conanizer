@@ -67,11 +67,14 @@ jobs:
       - name: Set Conan Version
         uses: allenevans/set-env@v1.1.0
         with:
-          overwrite: true
           CONAN_REFERENCE: 'boost/${{ steps.gitTag.outputs.tag }}'
           XMS_VERSION: ${{ steps.gitTag.outputs.tag }}
           CONAN_UPLOAD: https://conan.aquaveo.com
         if: startsWith(github.ref, 'refs/tags/')
+      - name: debug
+        run: |
+          echo "CONAN_UPLOAD=${CONAN_UPLOAD}"
+          printenv
       # Build the Conan Package
       - name: Build the Conan Packages
         run: python build_linux.py
