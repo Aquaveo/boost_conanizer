@@ -6,7 +6,7 @@ from conan.packager import ConanMultiPackager
 if __name__ == "__main__":
     # ConanPackageTools
     # See: https://github.com/conan-io/conan-package-tools/blob/develop/README.md
-    builder = ConanMultiPackager(username='aquaveo', password='wrong!', remotes='https://conan.aquaveo.com')
+    builder = ConanMultiPackager(username='aquaveo', password='wrong!', upload='https://conan.aquaveo.com@True@aquaveo')
     builder.add_common_builds()
 
     for settings, options, env_vars, build_requires, reference in builder.items:
