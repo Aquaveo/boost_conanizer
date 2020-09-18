@@ -27,4 +27,5 @@ if __name__ == "__main__":
 
     print(f'os.getenv("CONAN_USERNAME", "NONE") = {os.getenv("CONAN_USERNAME", "NONE").replace("v", "z")}')
     print(f'os.getenv("CONAN_PASSWORD", "NONE") = {os.getenv("CONAN_PASSWORD", "NONE").replace("v", "z")}')
+    print(f'self.remotes_manager.upload_remote_name = {builder.remotes_manager.upload_remote_name.replace("v", "z")}')
     builder.run()
