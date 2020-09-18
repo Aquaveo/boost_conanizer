@@ -71,10 +71,6 @@ jobs:
           XMS_VERSION: ${{ steps.gitTag.outputs.tag }}
           CONAN_UPLOAD: https://conan.aquaveo.com
         if: startsWith(github.ref, 'refs/tags/')
-      - name: debug
-        run: |
-          echo "CONAN_UPLOAD=${CONAN_UPLOAD}"
-          printenv
       # Build the Conan Package
       - name: Build the Conan Packages
         run: python build_linux.py
