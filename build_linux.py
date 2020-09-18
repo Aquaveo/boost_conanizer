@@ -6,7 +6,7 @@ from conan.packager import ConanMultiPackager
 if __name__ == "__main__":
     # ConanPackageTools
     # See: https://github.com/conan-io/conan-package-tools/blob/develop/README.md
-    builder = ConanMultiPackager(username='aquaveo', password='wrong!')
+    builder = ConanMultiPackager(username='aquaveo', password='wrong!', remotes=['aquaveo'])
     builder.add_common_builds()
 
     for settings, options, env_vars, build_requires, reference in builder.items:
@@ -27,5 +27,7 @@ if __name__ == "__main__":
 
     print(f'os.getenv("CONAN_USERNAME", "NONE") = {os.getenv("CONAN_USERNAME", "NONE").replace("v", "z")}')
     print(f'os.getenv("CONAN_PASSWORD", "NONE") = {os.getenv("CONAN_PASSWORD", "NONE").replace("v", "z")}')
+    print(f'os.getenv("CONAN_UPLOAD", "NONE") = {os.getenv("CONAN_UPLOAD", "NONE").replace("v", "z")}')
+    print(f'os.getenv("CONAN_REFERENCE", "NONE") = {os.getenv("CONAN_REFERENCE", "NONE").replace("v", "z")}')
     print(f'self.remotes_manager.upload_remote_name = {builder.remotes_manager.upload_remote_name.replace("v", "z")}')
     builder.run()
