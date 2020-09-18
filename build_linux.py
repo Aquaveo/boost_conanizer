@@ -6,7 +6,7 @@ from conan.packager import ConanMultiPackager
 if __name__ == "__main__":
     # ConanPackageTools
     # See: https://github.com/conan-io/conan-package-tools/blob/develop/README.md
-    builder = ConanMultiPackager(username='aquaveo', password='wrong!')
+    builder = ConanMultiPackager(username='aquaveo', password='wrong!', remotes='aquaveo')
     builder.add_common_builds()
 
     for settings, options, env_vars, build_requires, reference in builder.items:
@@ -25,5 +25,4 @@ if __name__ == "__main__":
         else:
             raise RuntimeError('Compiler must be GCC 5, 6, or 7')
 
-    builder.remotes_manager.upload_remote_name = 'aquaveo'
     builder.run()
