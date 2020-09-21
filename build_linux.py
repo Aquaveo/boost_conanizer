@@ -25,12 +25,4 @@ if __name__ == "__main__":
         else:
             raise RuntimeError('Compiler must be GCC 5, 6, or 7')
 
-    print(f'os.getenv("CONAN_LOGIN_USERNAME", "NONE") = {os.getenv("CONAN_LOGIN_USERNAME", "NONE").replace("v", "z")}')
-    print(f'os.getenv("CONAN_USERNAME", "NONE") = {os.getenv("CONAN_USERNAME", "NONE").replace("v", "z")}')
-    print(f'os.getenv("CONAN_PASSWORD", "NONE") = {os.getenv("CONAN_PASSWORD", "NONE").replace("v", "z")}')
-    print(f'os.getenv("CONAN_UPLOAD", "NONE") = {os.getenv("CONAN_UPLOAD", "NONE").replace("v", "z")}')
-    print(f'os.getenv("CONAN_REFERENCE", "NONE") = {os.getenv("CONAN_REFERENCE", "NONE").replace("v", "z")}')
-    print(f'self.remotes_manager.upload_remote_name = '
-          f'{builder.remotes_manager.upload_remote_name.replace("v", "z") if builder.remotes_manager.upload_remote_name else ""}')
-    print(f'builder.auth_manager._data = {builder.auth_manager._data}')
     builder.run()
