@@ -132,6 +132,15 @@ class BoostConan(ConanFile):
         if not self.options.i18n_backend and not self.options.without_locale:
             raise ConanInvalidConfiguration("Boost 'locale' library requires a i18n_backend, either 'icu' or 'iconv'")
 
+        if self.options.lzma:
+            raise ConanInvalidConfiguration("lzma needs an Aquaveo package to use it.")
+        
+        if self.options.zstd:
+            raise ConanInvalidConfiguration("zstd needs an Aquaveo package to use it.")
+        
+        if self.options.i18n_backend == 'icu':
+            raise ConanInvalidConfiguration("icu package needs an Aquaveo package to use it.")
+
         if not self.options.multithreading:
             # * For the reason 'thread' is deactivate look at https://stackoverflow.com/a/20991533
             #   Look also on the comments of the answer for more details
@@ -142,20 +151,20 @@ class BoostConan(ConanFile):
                     raise ConanInvalidConfiguration("Boost '%s' library requires multi threading" % lib)
 
     def build_requirements(self):
-        self.build_requires("b2/4.2.0")
+        self.build_requires("b2/4.2.0@aquaveo/stable")
 
     def requirements(self):
         if self._zip_bzip2_requires_needed:
             if self.options.zlib:
-                self.requires("zlib/1.2.11")
+                self.requires("zlib/1.2.11@aquaveo/stable")
             if self.options.bzip2:
-                self.requires("bzip2/1.0.8")
-            if self.options.lzma:
-                self.requires("xz_utils/5.2.4")
-            if self.options.zstd:
-                self.requires("zstd/1.4.3")
-        if self.options.i18n_backend == 'icu':
-            self.requires("icu/64.2")
+                self.requires("bzip2/1.0.8@aquaveo/stable")
+            # if self.options.lzma:
+            #     self.requires("xz_utils/5.2.4")
+            # if self.options.zstd:
+            #     self.requires("zstd/1.4.3")
+        # if self.options.i18n_backend == 'icu':
+        #     self.requires("icu/64.2")
 
     def package_id(self):
         if self.options.header_only:

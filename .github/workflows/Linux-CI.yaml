@@ -21,9 +21,9 @@ jobs:
     env:
       # Library Variables
       LIBRARY_NAME: boost
-      XMS_VERSION: 1.74.0
+      XMS_VERSION: 1.74.0.1
       # Conan Variables
-      CONAN_REFERENCE: boost/1.74.0
+      CONAN_REFERENCE: boost/1.74.0.1
       CONAN_ARCHS: x86_64
       CONAN_USERNAME: aquaveo
       CONAN_CHANNEL: stable
