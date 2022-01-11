@@ -34,7 +34,7 @@ jobs:
       CONAN_REMOTES: https://conan.aquaveo.com
       CONAN_BUILD_TYPES: ${{ matrix.build_type }}
       CONAN_GCC_VERSIONS: ${{ matrix.compiler-version }}
-      CONAN_DOCKER_IMAGE: docker.aquaveo.com/aquaveo/conan-docker/conan-gcc${{ matrix.compiler-version }}:py36
+      CONAN_DOCKER_IMAGE: conan_docker_image_was_not_set
       CONAN_PIP_INSTALL: 'conan-package-tools==0.35.1'
       CONAN_PIP_PACKAGE: 'conan==1.41.0'
       # Aquapi Variables
@@ -47,6 +47,14 @@ jobs:
 
 
     steps:
+      # Set docker image (GCC 6, 7)
+      - name: Set Docker Image (GCC 6, 7)
+        run: echo "CONAN_DOCKER_IMAGE=docker.aquaveo.com/aquaveo/conan-docker/conan-gcc${{ matrix.compiler-version }}:py36" >> $GITHUB_ENV
+        if: matrix.compiler-version == 6 || matrix.compiler-version == 7
+      # Set docker image (GCC 8)
+      - name: Set Docker Image (GCC 8)
+        run: echo "CONAN_DOCKER_IMAGE=docker.aquaveo.com/aquaveo/conan-docker/conan-gcc8-py3.6:v1.0" >> $GITHUB_ENV
+        if: matrix.compiler-version == 8
       # Checkout Sources
       - name: Checkout Source
         uses: actions/checkout@v2
