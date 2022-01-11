@@ -612,6 +612,10 @@ class BoostConan(ConanFile):
         if self.settings.os != "Windows":
             if self.options.fPIC:
                 cxx_flags.append("-fPIC")
+        
+        if self.settings.os == "Windows" and self.options.wchar_t == "typedef":
+            cxx_flags.append('/Zc:wchar_t-')
+        
         if self.settings.build_type == "RelWithDebInfo":
             if self.settings.compiler == "gcc" or "clang" in str(self.settings.compiler):
                 cxx_flags.append("-g")
