@@ -21,11 +21,28 @@ def update_items_linux(builder):
 
 
 def update_items_mac(builder):
-   pass
+   for settings, options, env_vars, build_requires, reference in builder.items:
+        # Require c++11 compatibility
+        if settings['compiler'] == 'gcc':
+            settings.update({
+                'compiler.libcxx': 'libstdc++11'
+            })
+        elif settings['compiler'] == 'apple-clang':
+            settings.update({'cppstd': 'gnu17'})
 
 
 def update_items_windows(builder):
-    pass
+    for settings, _, _, _, _ in builder.items:
+        # Require c++17 compatibility, if available.
+        if settings['compiler'] == 'Visual Studio':
+            compiler_version = int(settings['compiler.version'])
+            if compiler_version == 16:  # VS2019
+                settings.update({'cppstd': '17'})
+            else:
+                print('\n***WARNING: C++17 support. Some features of boost '
+                      'may not work correctly.')
+        else:
+            raise RuntimeError('Must use a Visual Studio compiler with this script!')
 
 
 if __name__ == "__main__":
