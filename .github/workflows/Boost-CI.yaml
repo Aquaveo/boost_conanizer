@@ -40,6 +40,8 @@ jobs:
       # Python Variables
       PYTHON_TARGET_VERSION: ${{ matrix.python-version }}
       RELEASE_PYTHON: 'False'
+      # build.py variable
+      AQUA_OS: mac
 
 
     steps:
@@ -162,6 +164,8 @@ jobs:
       # Python Variables
       PYTHON_TARGET_VERSION: ${{ matrix.python-version }}
       RELEASE_PYTHON: 'False'
+      # build.py variable
+      AQUA_OS: linux
 
 
     steps:
@@ -295,6 +299,8 @@ jobs:
       # Python Variables
       PYTHON_TARGET_VERSION: ${{ matrix.python-version }}
       RELEASE_PYTHON: 'False'
+      # build.py variable
+      AQUA_OS: windows
 
     steps:
       # Checkout Sources
