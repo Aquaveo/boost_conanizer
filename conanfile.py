@@ -58,6 +58,7 @@ class BoostConan(ConanFile):
         "pch": [True, False],
         "extra_b2_flags": "ANY",  # custom b2 flags
         "i18n_backend": ["iconv", "icu", None],
+        "wchar_t": ["builtin", "typedef"],
     }
     options.update({"without_%s" % libname: [True, False] for libname in lib_list})
 
@@ -85,6 +86,7 @@ class BoostConan(ConanFile):
         'pch': True,
         'extra_b2_flags': 'None',
         "i18n_backend": 'iconv',
+        "wchar_t": "builtin",
     }
 
     for libname in lib_list:
@@ -147,6 +149,9 @@ class BoostConan(ConanFile):
         
         if self.options.i18n_backend == 'icu':
             raise ConanInvalidConfiguration("icu package needs an Aquaveo package to use it.")
+
+        if self.options.wchar_t == 'typedef' and self.settings.compiler != 'Visual Studio':
+            raise ConanInvalidConfiguration('wchar_t=typedef is only valid for Visual Studio.')
 
         if not self.options.multithreading:
             # * For the reason 'thread' is deactivate look at https://stackoverflow.com/a/20991533

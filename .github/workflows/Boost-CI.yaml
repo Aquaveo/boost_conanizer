@@ -266,7 +266,7 @@ jobs:
 # WINDOWS
 # ----------------------------------------------------------------------------------------------
   windows:
-    name: Visual Studio ${{ matrix.compiler-version }} (${{ matrix.build_type }}, ${{ matrix.python-version }}, Windows)
+    name: Visual Studio ${{ matrix.compiler-version }} (${{ matrix.runtime }}, ${{ matrix.python-version }}, Windows)
     runs-on: ${{ matrix.platform }}
 
     strategy:
@@ -277,6 +277,7 @@ jobs:
         compiler-version: [16]
         build_type: [Release, Debug]
         runtime: [MT, MTd, MD, MDd]
+        wchar_t: [builtin, typedef]
         exclude:
           - build_type: Release
             runtime: MTd
@@ -303,6 +304,7 @@ jobs:
       CONAN_BUILD_TYPES: ${{ matrix.build_type }}
       CONAN_VISUAL_VERSIONS: ${{ matrix.compiler-version }}
       CONAN_VISUAL_RUNTIMES: ${{ matrix.runtime }}
+      CONAN_OPTIONS: boost:wchar_t=${{ matrix.wchar_t }}
       # Aquapi Variables
       AQUAPI_USERNAME: ${{ secrets.AQUAPI_USERNAME_SECRET }}
       AQUAPI_PASSWORD: ${{ secrets.AQUAPI_PASSWORD_SECRET }}
