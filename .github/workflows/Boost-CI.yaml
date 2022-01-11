@@ -291,6 +291,7 @@ jobs:
       CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD_SECRET }}
       CONAN_REMOTES: https://conan.aquaveo.com
       CONAN_BUILD_TYPES: ${{ matrix.build_type }}
+      CONAN_BUILD_ALL_OPTIONS_VALUES: boost:wchar_t
       CONAN_VISUAL_VERSIONS: ${{ matrix.compiler-version }}
       # Aquapi Variables
       AQUAPI_USERNAME: ${{ secrets.AQUAPI_USERNAME_SECRET }}
