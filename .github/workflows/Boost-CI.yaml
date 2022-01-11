@@ -266,7 +266,7 @@ jobs:
 # WINDOWS
 # ----------------------------------------------------------------------------------------------
   windows:
-    name: Visual Studio ${{ matrix.compiler-version }} (${{ matrix.runtime }}, ${{ matrix.python-version }}, Windows, ${{ wchar_t }})
+    name: Visual Studio ${{ matrix.compiler-version }} (${{ matrix.runtime }}, ${{ matrix.python-version }}, Windows, ${{ matrix.wchar_t }})
     runs-on: ${{ matrix.platform }}
 
     strategy:
