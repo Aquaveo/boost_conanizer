@@ -279,7 +279,6 @@ jobs:
         include:
           - build_type: Release
             runtime: [MT, MD]
-        include:
           - build_type: Debug
             runtime: [MTd, MDd]
 
