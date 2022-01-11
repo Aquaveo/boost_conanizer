@@ -124,6 +124,13 @@ class BoostConan(ConanFile):
         exe = self.options.python_executable if self.options.python_executable else sys.executable
         return str(exe).replace('\\', '/')
 
+    @property
+    def _internal_version(self):
+        version = self.version
+        if version.count('.') > 2:
+            version = version[:version.rfind('.')]  # Strip off the fourth piece, used by XMS
+        return version
+        
     def config_options(self):
         if self.settings.os == "Windows":
             del self.options.fPIC
@@ -180,9 +187,9 @@ class BoostConan(ConanFile):
                 self.info.options.python_version = self._python_version
 
     def source(self):
-        tools.get(**self.conan_data["sources"][self.version])
-        os.rename("boost_%s" % self.version.replace(".", "_"), self._source_subfolder)
-        for patch in self.conan_data["patches"].get(self.version, []):
+        tools.get(**self.conan_data["sources"][self._internal_version])
+        os.rename("boost_%s" % self._internal_version.replace(".", "_"), self._source_subfolder)
+        for patch in self.conan_data["patches"].get(self._internal_version, []):
             tools.patch(**patch)
 
     ##################### BUILDING METHODS ###########################
@@ -864,7 +871,7 @@ class BoostConan(ConanFile):
         gen_libs = [] if self.options.header_only else tools.collect_libs(self)
 
         if self._is_versioned_layout:
-            version_tokens = str(self.version).split(".")
+            version_tokens = str(self._internal_version).split(".")
             if len(version_tokens) >= 2:
                 major = version_tokens[0]
                 minor = version_tokens[1]
