@@ -266,7 +266,7 @@ jobs:
 # WINDOWS
 # ----------------------------------------------------------------------------------------------
   windows:
-    name: Visual Studio ${{ matrix.compiler-version }} (${{ matrix.runtime }}, ${{ matrix.python-version }}, Windows, ${{ matrix.wchar_t }}, Shared: ${{ matrix.shared }}, Header only: ${{ matrix.header_only }})
+    name: Visual Studio ${{ matrix.compiler-version }} (${{ matrix.runtime }}, ${{ matrix.python-version }}, Windows, ${{ matrix.wchar_t }}, shared=${{ matrix.shared }}, Header only=${{ matrix.header_only }})
     runs-on: ${{ matrix.platform }}
 
     strategy:
