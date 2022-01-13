@@ -266,7 +266,7 @@ jobs:
 # WINDOWS
 # ----------------------------------------------------------------------------------------------
   windows:
-    name: Visual Studio ${{ matrix.compiler-version }} (${{ matrix.runtime }}, ${{ matrix.python-version }}, Windows, ${{ matrix.wchar_t }}, shared=${{ matrix.shared }})
+    name: Visual Studio ${{ matrix.compiler-version }} (${{ matrix.runtime }}, ${{ matrix.python-version }}, Windows, ${{ matrix.wchar_t }})
     runs-on: ${{ matrix.platform }}
 
     strategy:
@@ -275,14 +275,18 @@ jobs:
         platform: [windows-latest]
         python-version: [3.6.8]
         compiler-version: [16]
+        build_type: [Release, Debug]
         runtime: [MT, MTd, MD, MDd]
-        shared: [False]
         wchar_t: [builtin, typedef]
-        include:
-          - runtime: MD
-            shared: True
-          - runtime: MDd
-            shared: True
+        exclude:
+          - build_type: Release
+            runtime: MTd
+          - build_type: Release
+            runtime: MDd
+          - build_type: Debug
+            runtime: MT
+          - build_type: Debug
+            runtime: MD
 
     env:
       # Library Variables
