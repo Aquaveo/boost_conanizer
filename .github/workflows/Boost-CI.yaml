@@ -266,7 +266,7 @@ jobs:
 # WINDOWS
 # ----------------------------------------------------------------------------------------------
   windows:
-    name: Visual Studio ${{ matrix.compiler-version }} (${{ matrix.runtime }}, ${{ matrix.python-version }}, Windows, ${{ matrix.wchar_t }}, shared=${{ matrix.shared }}, Header only=${{ matrix.header_only }})
+    name: Visual Studio ${{ matrix.compiler-version }} (${{ matrix.runtime }}, ${{ matrix.python-version }}, Windows, ${{ matrix.wchar_t }}, shared=${{ matrix.shared }})
     runs-on: ${{ matrix.platform }}
 
     strategy:
@@ -278,7 +278,6 @@ jobs:
         runtime: [MT, MTd, MD, MDd]
         wchar_t: [builtin, typedef]
         shared: [True, False]
-        header_only: [True, False]
         exclude:
           - runtime: MT
             shared: False
