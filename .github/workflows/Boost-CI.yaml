@@ -305,7 +305,6 @@ jobs:
       CONAN_VISUAL_VERSIONS: ${{ matrix.compiler-version }}
       CONAN_VISUAL_RUNTIMES: ${{ matrix.runtime }}
       CONAN_OPTIONS: boost:wchar_t=${{ matrix.wchar_t }}
-      CONAN_PATH: c:\.conan-data
       # Aquapi Variables
       AQUAPI_USERNAME: ${{ secrets.AQUAPI_USERNAME_SECRET }}
       AQUAPI_PASSWORD: ${{ secrets.AQUAPI_PASSWORD_SECRET }}
@@ -341,6 +340,7 @@ jobs:
         shell: cmd
       - name: Set Conan Path
         run: |
+          conan config set storage.path=c:\.conan
           echo "CONAN_PATH=$(conan config get storage.path)" >> $env:GITHUB_ENV
         shell: powershell
       # Get Tag Name
