@@ -266,7 +266,7 @@ jobs:
 # WINDOWS
 # ----------------------------------------------------------------------------------------------
   windows:
-    name: Visual Studio ${{ matrix.compiler-version }} (${{ matrix.runtime }}, ${{ matrix.python-version }}, Windows, ${{ matrix.wchar_t }})
+    name: Visual Studio ${{ matrix.compiler-version }} (${{ matrix.runtime }}, ${{ matrix.python-version }}, Windows, ${{ matrix.wchar_t }}, Shared: ${{ matrix.shared }}, Header only: ${{ matrix.header_only }})
     runs-on: ${{ matrix.platform }}
 
     strategy:
@@ -277,6 +277,13 @@ jobs:
         compiler-version: [16]
         runtime: [MT, MTd, MD, MDd]
         wchar_t: [builtin, typedef]
+        shared: [True, False]
+        header_only: [True, False]
+        exclude:
+          - runtime: MT
+            shared: False
+          - runtime: MTd
+            shared: False
 
     env:
       # Library Variables
@@ -294,7 +301,7 @@ jobs:
       CONAN_REMOTES: https://conan.aquaveo.com
       CONAN_VISUAL_VERSIONS: ${{ matrix.compiler-version }}
       CONAN_VISUAL_RUNTIMES: ${{ matrix.runtime }}
-      CONAN_OPTIONS: boost:wchar_t=${{ matrix.wchar_t }}
+      CONAN_OPTIONS: boost:wchar_t=${{ matrix.wchar_t }}, boost:header_only=False, boost:shared=False
       # Aquapi Variables
       AQUAPI_USERNAME: ${{ secrets.AQUAPI_USERNAME_SECRET }}
       AQUAPI_PASSWORD: ${{ secrets.AQUAPI_PASSWORD_SECRET }}
