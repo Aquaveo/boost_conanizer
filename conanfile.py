@@ -58,6 +58,7 @@ class BoostConan(ConanFile):
         "pch": [True, False],
         "extra_b2_flags": "ANY",  # custom b2 flags
         "i18n_backend": ["iconv", "icu", None],
+        "wchar_t": ["builtin", "typedef"],
     }
     options.update({"without_%s" % libname: [True, False] for libname in lib_list})
 
@@ -85,13 +86,13 @@ class BoostConan(ConanFile):
         'pch': True,
         'extra_b2_flags': 'None',
         "i18n_backend": 'iconv',
+        "wchar_t": "builtin",
     }
 
     for libname in lib_list:
         if libname != "python":
             default_options.update({"without_%s" % libname: False})
     default_options.update({"without_python": True})
-    short_paths = True
     no_copy_source = True
     exports_sources = ['patches/*']
 
@@ -124,6 +125,13 @@ class BoostConan(ConanFile):
         exe = self.options.python_executable if self.options.python_executable else sys.executable
         return str(exe).replace('\\', '/')
 
+    @property
+    def _internal_version(self):
+        version = self.version
+        if version.count('.') > 2:
+            version = version[:version.rfind('.')]  # Strip off the fourth piece, used by XMS
+        return version
+        
     def config_options(self):
         if self.settings.os == "Windows":
             del self.options.fPIC
@@ -131,6 +139,18 @@ class BoostConan(ConanFile):
     def configure(self):
         if not self.options.i18n_backend and not self.options.without_locale:
             raise ConanInvalidConfiguration("Boost 'locale' library requires a i18n_backend, either 'icu' or 'iconv'")
+
+        if self.options.lzma:
+            raise ConanInvalidConfiguration("lzma needs an Aquaveo package to use it.")
+        
+        if self.options.zstd:
+            raise ConanInvalidConfiguration("zstd needs an Aquaveo package to use it.")
+        
+        if self.options.i18n_backend == 'icu':
+            raise ConanInvalidConfiguration("icu package needs an Aquaveo package to use it.")
+
+        if self.options.wchar_t == 'typedef' and self.settings.compiler != 'Visual Studio':
+            raise ConanInvalidConfiguration('wchar_t=typedef is only valid for Visual Studio.')
 
         if not self.options.multithreading:
             # * For the reason 'thread' is deactivate look at https://stackoverflow.com/a/20991533
@@ -142,20 +162,20 @@ class BoostConan(ConanFile):
                     raise ConanInvalidConfiguration("Boost '%s' library requires multi threading" % lib)
 
     def build_requirements(self):
-        self.build_requires("b2/4.2.0")
+        self.build_requires("b2/4.2.0@aquaveo/stable")
 
     def requirements(self):
         if self._zip_bzip2_requires_needed:
             if self.options.zlib:
-                self.requires("zlib/1.2.11")
+                self.requires("zlib/1.2.11@aquaveo/stable")
             if self.options.bzip2:
-                self.requires("bzip2/1.0.8")
-            if self.options.lzma:
-                self.requires("xz_utils/5.2.4")
-            if self.options.zstd:
-                self.requires("zstd/1.4.3")
-        if self.options.i18n_backend == 'icu':
-            self.requires("icu/64.2")
+                self.requires("bzip2/1.0.8@aquaveo/stable")
+            # if self.options.lzma:
+            #     self.requires("xz_utils/5.2.4")
+            # if self.options.zstd:
+            #     self.requires("zstd/1.4.3")
+        # if self.options.i18n_backend == 'icu':
+        #     self.requires("icu/64.2")
 
     def package_id(self):
         if self.options.header_only:
@@ -171,9 +191,9 @@ class BoostConan(ConanFile):
                 self.info.options.python_version = self._python_version
 
     def source(self):
-        tools.get(**self.conan_data["sources"][self.version])
-        os.rename("boost_%s" % self.version.replace(".", "_"), self._source_subfolder)
-        for patch in self.conan_data["patches"].get(self.version, []):
+        tools.get(**self.conan_data["sources"][self._internal_version])
+        os.rename("boost_%s" % self._internal_version.replace(".", "_"), self._source_subfolder)
+        for patch in self.conan_data["patches"].get(self._internal_version, []):
             tools.patch(**patch)
 
     ##################### BUILDING METHODS ###########################
@@ -591,6 +611,10 @@ class BoostConan(ConanFile):
         if self.settings.os != "Windows":
             if self.options.fPIC:
                 cxx_flags.append("-fPIC")
+        
+        if self.settings.os == "Windows" and self.options.wchar_t == "typedef":
+            cxx_flags.append('/Zc:wchar_t-')
+        
         if self.settings.build_type == "RelWithDebInfo":
             if self.settings.compiler == "gcc" or "clang" in str(self.settings.compiler):
                 cxx_flags.append("-g")
@@ -855,7 +879,7 @@ class BoostConan(ConanFile):
         gen_libs = [] if self.options.header_only else tools.collect_libs(self)
 
         if self._is_versioned_layout:
-            version_tokens = str(self.version).split(".")
+            version_tokens = str(self._internal_version).split(".")
             if len(version_tokens) >= 2:
                 major = version_tokens[0]
                 minor = version_tokens[1]
