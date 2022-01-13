@@ -305,6 +305,7 @@ jobs:
       CONAN_VISUAL_VERSIONS: ${{ matrix.compiler-version }}
       CONAN_VISUAL_RUNTIMES: ${{ matrix.runtime }}
       CONAN_OPTIONS: boost:wchar_t=${{ matrix.wchar_t }}
+      CONAN_PATH: c:\.conan-data
       # Aquapi Variables
       AQUAPI_USERNAME: ${{ secrets.AQUAPI_USERNAME_SECRET }}
       AQUAPI_PASSWORD: ${{ secrets.AQUAPI_PASSWORD_SECRET }}

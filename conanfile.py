@@ -93,7 +93,6 @@ class BoostConan(ConanFile):
         if libname != "python":
             default_options.update({"without_%s" % libname: False})
     default_options.update({"without_python": True})
-    short_paths = True
     no_copy_source = True
     exports_sources = ['patches/*']
 
