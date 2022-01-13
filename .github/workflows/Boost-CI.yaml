@@ -279,7 +279,9 @@ jobs:
         shared: [False]
         wchar_t: [builtin, typedef]
         include:
-          - runtime: [MD, MDd]
+          - runtime: MD
+            shared: True
+          - runtime: MDd
             shared: True
 
     env:
