@@ -279,8 +279,8 @@ jobs:
         shared: [False]
         wchar_t: [builtin, typedef]
         include:
-          runtime: [MD, MDd]
-          shared: True
+          - runtime: [MD, MDd]
+            shared: True
 
     env:
       # Library Variables
