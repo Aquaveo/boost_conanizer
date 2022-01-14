@@ -36,7 +36,7 @@ class BoostConan(ConanFile):
     # implementation
     options = {
         "shared": [True, False],
-        "header_only": [True, False],
+        "header_only": [False],
         "error_code_header_only": [True, False],
         "system_no_deprecated": [True, False],
         "asio_no_deprecated": [True, False],
