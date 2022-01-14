@@ -932,7 +932,7 @@ class BoostConan(ConanFile):
             if self._gnu_cxx11_abi:
                 self.cpp_info.defines.append("_GLIBCXX_USE_CXX11_ABI=%s" % self._gnu_cxx11_abi)
 
-        if True # not self.options.header_only:
+        if True: # not self.options.header_only:
             if self.options.error_code_header_only:
                 self.cpp_info.defines.append("BOOST_ERROR_CODE_HEADER_ONLY")
 
