@@ -178,7 +178,8 @@ class BoostConan(ConanFile):
         #     self.requires("icu/64.2")
 
     def package_id(self):
-        # if self.options.header_only:
+        if True: # if self.options.header_only:
+            pass
         #     self.info.header_only()
         #     self.info.options.header_only = True
         else:
