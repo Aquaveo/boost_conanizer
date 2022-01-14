@@ -49,7 +49,7 @@ if __name__ == "__main__":
     # ConanPackageTools
     # See: https://github.com/conan-io/conan-package-tools/blob/develop/README.md
     builder = ConanMultiPackager()
-    builder.add_common_builds()
+    builder.add_common_builds(header_only=False)
 
     if os.environ['AQUA_OS'] == 'linux':
         update_items_linux(builder)
