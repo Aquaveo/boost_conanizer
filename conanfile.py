@@ -36,7 +36,7 @@ class BoostConan(ConanFile):
     # implementation
     options = {
         "shared": [True, False],
-        "header_only": [False],
+        # "header_only": [False],
         "error_code_header_only": [True, False],
         "system_no_deprecated": [True, False],
         "asio_no_deprecated": [True, False],
@@ -64,7 +64,7 @@ class BoostConan(ConanFile):
 
     default_options = {
         'shared': False,
-        'header_only': False,
+        # 'header_only': False,
         'error_code_header_only': False,
         'system_no_deprecated': False,
         'asio_no_deprecated': False,
@@ -114,7 +114,7 @@ class BoostConan(ConanFile):
 
     @property
     def _zip_bzip2_requires_needed(self):
-        return not self.options.without_iostreams and not self.options.header_only
+        return not self.options.without_iostreams # and not self.options.header_only
 
     @property
     def _python_executable(self):
@@ -178,9 +178,9 @@ class BoostConan(ConanFile):
         #     self.requires("icu/64.2")
 
     def package_id(self):
-        if self.options.header_only:
-            self.info.header_only()
-            self.info.options.header_only = True
+        # if self.options.header_only:
+        #     self.info.header_only()
+        #     self.info.options.header_only = True
         else:
             del self.info.options.debug_level
             del self.info.options.pch
@@ -435,9 +435,9 @@ class BoostConan(ConanFile):
                 self.run(command)
 
     def build(self):
-        if self.options.header_only:
-            self.output.warn("Header only package, skipping build")
-            return
+        # if self.options.header_only:
+        #     self.output.warn("Header only package, skipping build")
+        #     return
 
         self._clean()
 
@@ -848,8 +848,8 @@ class BoostConan(ConanFile):
         self.copy("LICENSE_1_0.txt", dst="licenses", src=os.path.join(self.source_folder,
                                                                       self._source_subfolder))
         tools.rmdir(os.path.join(self.package_folder, "lib", "cmake"))
-        if self.options.header_only:
-            self.copy(pattern="*", dst="include/boost", src="%s/boost" % self._boost_dir)
+        # if self.options.header_only:
+        #     self.copy(pattern="*", dst="include/boost", src="%s/boost" % self._boost_dir)
 
         if self.settings.os == "Emscripten":
             self._create_emscripten_libs()
@@ -876,7 +876,7 @@ class BoostConan(ConanFile):
         return layout == "versioned" or (layout == "b2-default" and os.name == 'nt')
 
     def package_info(self):
-        gen_libs = [] if self.options.header_only else tools.collect_libs(self)
+        gen_libs = tools.collect_libs(self) # [] if self.options.header_only else tools.collect_libs(self)
 
         if self._is_versioned_layout:
             version_tokens = str(self._internal_version).split(".")
@@ -912,7 +912,7 @@ class BoostConan(ConanFile):
         self.output.info("LIBRARIES: %s" % self.cpp_info.libs)
         self.output.info("Package folder: %s" % self.package_folder)
 
-        if not self.options.header_only and self.options.shared:
+        if self.options.shared: # not self.options.header_only and self.options.shared:
             self.cpp_info.defines.append("BOOST_ALL_DYN_LINK")
 
         if self.options.system_no_deprecated:
@@ -931,7 +931,7 @@ class BoostConan(ConanFile):
             if self._gnu_cxx11_abi:
                 self.cpp_info.defines.append("_GLIBCXX_USE_CXX11_ABI=%s" % self._gnu_cxx11_abi)
 
-        if not self.options.header_only:
+        if True # not self.options.header_only:
             if self.options.error_code_header_only:
                 self.cpp_info.defines.append("BOOST_ERROR_CODE_HEADER_ONLY")
 
