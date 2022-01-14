@@ -21,9 +21,9 @@ jobs:
     env:
       # Library Variables
       LIBRARY_NAME: boost
-      XMS_VERSION: 1.74.0.1
+      XMS_VERSION: 1.74.0.2
       # Conan Variables
-      CONAN_REFERENCE: boost/1.74.0.1
+      CONAN_REFERENCE: boost/1.74.0.2
       CONAN_ARCHS: x86_64
       CONAN_USERNAME: aquaveo
       CONAN_CHANNEL: testing
@@ -142,9 +142,9 @@ jobs:
     env:
       # Library Variables
       LIBRARY_NAME: boost
-      XMS_VERSION: 1.74.0.1
+      XMS_VERSION: 1.74.0.2
       # Conan Variables
-      CONAN_REFERENCE: boost/1.74.0.1
+      CONAN_REFERENCE: boost/1.74.0.2
       CONAN_ARCHS: x86_64
       CONAN_USERNAME: aquaveo
       CONAN_CHANNEL: testing
@@ -277,14 +277,15 @@ jobs:
         compiler-version: [16]
         runtime: [MT, MTd, MD, MDd]
         wchar_t: [builtin, typedef]
+        shared: [True, False]
 
     env:
       # Library Variables
       LIBRARY_NAME: boost
-      XMS_VERSION: 1.74.0.1
-      MATRIX_NAME: ${{ matrix.platform }}-VS${{ matrix.compiler-version }}-${{ matrix.runtime }}-${{ matrix.wchar_t }}.tar.gz
+      XMS_VERSION: 1.74.0.2
+      MATRIX_NAME: ${{ matrix.platform }}-VS${{ matrix.compiler-version }}-${{ matrix.runtime }}-${{ matrix.wchar_t }}-${{ matrix.shared == 'True' && 'shared' || 'static' }}.tar.gz
       # Conan Variables
-      CONAN_REFERENCE: boost/1.74.0.1
+      CONAN_REFERENCE: boost/1.74.0.2
       CONAN_ARCHS: x86_64
       CONAN_USERNAME: aquaveo
       CONAN_CHANNEL: testing
@@ -294,7 +295,7 @@ jobs:
       CONAN_REMOTES: https://conan.aquaveo.com
       CONAN_VISUAL_VERSIONS: ${{ matrix.compiler-version }}
       CONAN_VISUAL_RUNTIMES: ${{ matrix.runtime }}
-      CONAN_OPTIONS: boost:wchar_t=${{ matrix.wchar_t }}, boost:header_only=False, boost:shared=False
+      CONAN_OPTIONS: boost:wchar_t=${{ matrix.wchar_t }}, boost:header_only=False, boost:shared=${{ matrix.shared }}
       # Aquapi Variables
       AQUAPI_USERNAME: ${{ secrets.AQUAPI_USERNAME_SECRET }}
       AQUAPI_PASSWORD: ${{ secrets.AQUAPI_PASSWORD_SECRET }}
