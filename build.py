@@ -10,14 +10,14 @@ def update_items_linux(builder):
                 'compiler.libcxx': 'libstdc++11'
             })
             compiler_version = int(settings['compiler.version'])
-            if compiler_version == 6:
+            if compiler_version in [5, 6]:
                 settings.update({'cppstd': '14'})
             elif compiler_version in [7, 8]:
                 settings.update({'cppstd': '17'})
             else:
-                raise RuntimeError('Compiler must be GCC 6, 7, or 8')
+                raise RuntimeError('Compiler must be GCC 5, 6, 7, or 8')
         else:
-            raise RuntimeError('Compiler must be GCC 6, 7, or 8')
+            raise RuntimeError('Compiler must be GCC 5, 6, 7, or 8')
 
 
 def update_items_mac(builder):
