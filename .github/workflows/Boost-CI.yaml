@@ -21,9 +21,9 @@ jobs:
     env:
       # Library Variables
       LIBRARY_NAME: boost
-      XMS_VERSION: 1.74.0.2
+      XMS_VERSION: 1.74.0.3
       # Conan Variables
-      CONAN_REFERENCE: boost/1.74.0.2
+      CONAN_REFERENCE: boost/1.74.0.3
       CONAN_ARCHS: x86_64
       CONAN_USERNAME: aquaveo
       CONAN_CHANNEL: testing
@@ -136,15 +136,15 @@ jobs:
       matrix:
         platform: [ubuntu-18.04]
         python-version: [3.6]
-        compiler-version: [6, 7, 8]
+        compiler-version: [5, 6, 7, 8]
         build_type: [Release, Debug]
 
     env:
       # Library Variables
       LIBRARY_NAME: boost
-      XMS_VERSION: 1.74.0.2
+      XMS_VERSION: 1.74.0.3
       # Conan Variables
-      CONAN_REFERENCE: boost/1.74.0.2
+      CONAN_REFERENCE: boost/1.74.0.3
       CONAN_ARCHS: x86_64
       CONAN_USERNAME: aquaveo
       CONAN_CHANNEL: testing
@@ -169,10 +169,10 @@ jobs:
 
 
     steps:
-      # Set docker image (GCC 6, 7)
-      - name: Set Docker Image (GCC 6, 7)
+      # Set docker image (GCC 5, 6, 7)
+      - name: Set Docker Image (GCC 5, 6, 7)
         run: echo "CONAN_DOCKER_IMAGE=docker.aquaveo.com/aquaveo/conan-docker/conan-gcc${{ matrix.compiler-version }}:py36" >> $GITHUB_ENV
-        if: matrix.compiler-version == 6 || matrix.compiler-version == 7
+        if: matrix.compiler-version == 5 || matrix.compiler-version == 6 || matrix.compiler-version == 7
       # Set docker image (GCC 8)
       - name: Set Docker Image (GCC 8)
         run: echo "CONAN_DOCKER_IMAGE=docker.aquaveo.com/aquaveo/conan-docker/conan-gcc8-py3.6:v1.0" >> $GITHUB_ENV
@@ -290,10 +290,10 @@ jobs:
     env:
       # Library Variables
       LIBRARY_NAME: boost
-      XMS_VERSION: 1.74.0.2
+      XMS_VERSION: 1.74.0.3
       MATRIX_NAME: ${{ matrix.platform }}-VS${{ matrix.compiler-version }}-${{ matrix.runtime }}-${{ matrix.wchar_t }}-${{ matrix.link }}.tar.gz
       # Conan Variables
-      CONAN_REFERENCE: boost/1.74.0.2
+      CONAN_REFERENCE: boost/1.74.0.3
       CONAN_ARCHS: x86_64
       CONAN_USERNAME: aquaveo
       CONAN_CHANNEL: testing
