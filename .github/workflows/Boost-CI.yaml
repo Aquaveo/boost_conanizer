@@ -21,9 +21,9 @@ jobs:
     env:
       # Library Variables
       LIBRARY_NAME: boost
-      XMS_VERSION: 1.74.0.3
+      XMS_VERSION: 1.74.0.4
       # Conan Variables
-      CONAN_REFERENCE: boost/1.74.0.3
+      CONAN_REFERENCE: boost/1.74.0.4
       CONAN_ARCHS: x86_64
       CONAN_USERNAME: aquaveo
       CONAN_CHANNEL: testing
@@ -142,9 +142,9 @@ jobs:
     env:
       # Library Variables
       LIBRARY_NAME: boost
-      XMS_VERSION: 1.74.0.3
+      XMS_VERSION: 1.74.0.4
       # Conan Variables
-      CONAN_REFERENCE: boost/1.74.0.3
+      CONAN_REFERENCE: boost/1.74.0.4
       CONAN_ARCHS: x86_64
       CONAN_USERNAME: aquaveo
       CONAN_CHANNEL: testing
@@ -290,10 +290,10 @@ jobs:
     env:
       # Library Variables
       LIBRARY_NAME: boost
-      XMS_VERSION: 1.74.0.3
+      XMS_VERSION: 1.74.0.4
       MATRIX_NAME: ${{ matrix.platform }}-VS${{ matrix.compiler-version }}-${{ matrix.runtime }}-${{ matrix.wchar_t }}-${{ matrix.link }}.tar.gz
       # Conan Variables
-      CONAN_REFERENCE: boost/1.74.0.3
+      CONAN_REFERENCE: boost/1.74.0.4
       CONAN_ARCHS: x86_64
       CONAN_USERNAME: aquaveo
       CONAN_CHANNEL: testing
