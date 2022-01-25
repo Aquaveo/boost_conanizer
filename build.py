@@ -11,9 +11,9 @@ def update_items_linux(builder):
             })
             compiler_version = int(settings['compiler.version'])
             if compiler_version in [5, 6]:
-                settings.update({'cppstd': '14'})
+                settings.update({'compiler.cppstd': '14'})
             elif compiler_version in [7, 8]:
-                settings.update({'cppstd': '17'})
+                settings.update({'compiler.cppstd': '17'})
             else:
                 raise RuntimeError('Compiler must be GCC 5, 6, 7, or 8')
         else:
@@ -28,7 +28,7 @@ def update_items_mac(builder):
                 'compiler.libcxx': 'libstdc++11'
             })
         elif settings['compiler'] == 'apple-clang':
-            settings.update({'cppstd': 'gnu17'})
+            settings.update({'compiler.cppstd': 'gnu17'})
 
 
 def update_items_windows(builder):
@@ -37,7 +37,7 @@ def update_items_windows(builder):
         if settings['compiler'] == 'Visual Studio':
             compiler_version = int(settings['compiler.version'])
             if compiler_version == 16:  # VS2019
-                settings.update({'cppstd': '17'})
+                settings.update({'compiler.cppstd': '17'})
             else:
                 print('\n***WARNING: C++17 support. Some features of boost '
                       'may not work correctly.')
